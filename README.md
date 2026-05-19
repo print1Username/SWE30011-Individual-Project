@@ -1,8 +1,12 @@
 # SWE30011 Individual Project
 
-> Project description here.
-
----
+This project presents a basic smart home system developed using an Arduino Uno and several sensors and actuators to improve convenience, security, and energy efficiency.
+\
+The system integrates components such as an LDR, ultrasonic sensor, tilt sensor, LED, cooling fan, buzzer, pushbutton, and relay to perform automated tasks based on environmental conditions. 
+\
+The Arduino Uno acts as the main controller, processing sensor inputs and controlling the connected devices in real time. 
+\
+Features of the system include automatic lighting, smart ventilation, and basic security alerts, demonstrating the fundamental concepts of IoT-based home automation.
 
 ## Requirements
 
