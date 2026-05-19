@@ -106,7 +106,7 @@ pip install -r requirements.txt
 ### Or install manually
 
 ```bash
-pip install flask
+pip install flask pyserial
 ```
 
 ---
