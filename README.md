@@ -100,7 +100,6 @@ pip install -r requirements.txt
 python main.py
 ```
 
----
 
 ## Exit Virtual Environment
 
@@ -110,13 +109,10 @@ deactivate
 
 
 ## Arduino Setup
-
 1. Open Arduino IDE
 2. Open Arduino project / `.ino` file
 3. Select board and COM port
 4. Upload firmware
-
----
 
 ## Project Structure
 
