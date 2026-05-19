@@ -149,6 +149,8 @@ deactivate
 project-folder/
 │
 ├── .venv/
+├── arduino/
+│   └── main.ino
 ├── main.py
 ├── requirements.txt
 └── README.md
