@@ -1,5 +1,25 @@
 # SWE30011 Individual Project
 
+## Install Environment
+### Windows
+[Python](https://www.python.org/)
+\
+[Arduino IDE](https://www.arduino.cc/en/software/)
+
+---
+
+### Linux
+Update package:
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+Install Python:
+```bash
+sudo apt install python3
+```
+
 ## Python virtual Environment deploy / activate
 1. Create virtual environment
 ```bash
