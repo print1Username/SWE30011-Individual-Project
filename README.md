@@ -95,18 +95,10 @@ After activation, your terminal should display:
 
 ---
 
-## 3. Install dependencies
-
-### Using requirements.txt (Recommended)
+## 3. Install dependencies (using requirements.txt)
 
 ```bash
 pip install -r requirements.txt
-```
-
-### Or install manually
-
-```bash
-pip install flask pyserial
 ```
 
 ---
