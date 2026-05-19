@@ -1,46 +1,155 @@
 # SWE30011 Individual Project
 
-## Install Environment
-### Windows
-[Python](https://www.python.org/)
-\
-[Arduino IDE](https://www.arduino.cc/en/software/)
+> Project description here.
 
 ---
 
-### Linux
-1. Update package:
+## Requirements
+
+- [Python](https://www.python.org/)
+- [Arduino IDE](https://www.arduino.cc/en/software/)
+
+Recommended Python Version:
+
+```text
+Python 3.12.x
+```
+
+---
+
+## Environment Installation
+
+### Windows
+
+1. Install Python
+2. Install Arduino IDE
+
+Verify installation:
+
+```bash
+python --version
+```
+
+---
+
+### Linux (Ubuntu / Debian)
+
+#### 1. Update packages
+
 ```bash
 sudo apt update
 sudo apt upgrade
 ```
 
-2. Install Python:
+#### 2. Install Python and required packages
+
 ```bash
-sudo apt install python3
+sudo apt install python3 python3-venv python3-pip
 ```
 
-## Python virtual Environment deploy / activate
-1. Create virtual environment
+Verify installation:
+
+```bash
+python3 --version
+```
+
+---
+
+## Python Virtual Environment
+
+### 1. Create virtual environment
+
+#### Windows
+
 ```bash
 python -m venv .venv
 ```
 
-2. Activate virtual environment
-```bash
-# Windows
-.venv/bin/activate
+#### Linux
 
-# Linux
+```bash
+python3 -m venv .venv
+```
+
+---
+
+### 2. Activate virtual environment
+
+#### Windows
+
+```bash
+.venv/bin/activate
+```
+
+#### Linux
+
+```bash
 source .venv/bin/activate
 ```
 
-3. Install pip requirements
+After activation, your terminal should display:
+
+```bash
+(.venv) C:\...
+```
+
+---
+
+## 3. Install dependencies
+
+### Using requirements.txt (Recommended)
+
+```bash
+pip install -r requirements.txt
+```
+
+### Or install manually
+
 ```bash
 pip install flask
 ```
 
-4. Run python file
+---
+
+## Run Project
+
+### Windows
+
 ```bash
 python main.py
+```
+
+### Linux
+
+```bash
+python3 main.py
+```
+
+---
+
+## Exit Virtual Environment
+
+```bash
+deactivate
+```
+
+
+## Arduino Setup
+
+1. Open Arduino IDE
+2. Open Arduino project / `.ino` file
+3. Select board and COM port
+4. Upload firmware
+
+---
+
+## Project Structure
+
+```text
+project-folder/
+│
+├── .venv/
+├── main.py
+├── requirements.txt
+└── README.md
 ```
