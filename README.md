@@ -120,7 +120,7 @@ deactivate
 project-folder/
 ├── .venv/
 ├── arduino/
-│   └── main.ino
+│   └── arduino.ino
 ├── main.py
 ├── requirements.txt
 └── README.md
