@@ -9,13 +9,13 @@
 ---
 
 ### Linux
-Update package:
+1. Update package:
 ```bash
 sudo apt update
 sudo apt upgrade
 ```
 
-Install Python:
+2. Install Python:
 ```bash
 sudo apt install python3
 ```
@@ -28,8 +28,11 @@ python -m venv .venv
 
 2. Activate virtual environment
 ```bash
-.venv/bin/activate # Windows
-source .venv/bin/activate # Linux
+# Windows
+.venv/bin/activate
+
+# Linux
+source .venv/bin/activate
 ```
 
 3. Install pip requirements
