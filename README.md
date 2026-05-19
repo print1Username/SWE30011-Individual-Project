@@ -122,7 +122,6 @@ deactivate
 
 ```text
 project-folder/
-│
 ├── .venv/
 ├── arduino/
 │   └── main.ino
