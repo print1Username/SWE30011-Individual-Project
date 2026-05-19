@@ -84,7 +84,6 @@ After activation, your terminal should display:
 (.venv) C:\...
 ```
 
----
 
 ## 3. Install dependencies (using requirements.txt)
 
@@ -92,7 +91,6 @@ After activation, your terminal should display:
 pip install -r requirements.txt
 ```
 
----
 
 ## Run Project
 
