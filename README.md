@@ -59,19 +59,10 @@ python3 --version
 
 ### 1. Create virtual environment
 
-#### Windows
-
 ```bash
 python -m venv .venv
 ```
 
-#### Linux
-
-```bash
-python3 -m venv .venv
-```
-
----
 
 ### 2. Activate virtual environment
 
@@ -109,12 +100,6 @@ pip install -r requirements.txt
 
 ```bash
 python main.py
-```
-
-### Linux
-
-```bash
-python3 main.py
 ```
 
 ---
