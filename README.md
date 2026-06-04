@@ -125,6 +125,8 @@ project-folder/
 ├── .venv/
 ├── arduino/
 │   └── arduino.ino
+├── templates/
+│   └── index.html
 ├── main.py
 ├── requirements.txt
 └── README.md
