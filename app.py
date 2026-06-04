@@ -65,12 +65,7 @@ def find_arduino():
 
 
 def connect_arduino():
-
-    global ser
-    global arduino_connected
-
-    if serial is None:
-        return
+    global ser, arduino_connected
 
     while True:
 
@@ -79,41 +74,34 @@ def connect_arduino():
             continue
 
         try:
-
             port = find_arduino()
 
             if port:
-
-                print(f"[Arduino] Found: {port}")
+                print(f"[Arduino] Trying {port}")
 
                 ser = serial.Serial(
-                    port,
-                    9600,
-                    timeout=1
+                    port=port,
+                    baudrate=9600,
+                    timeout=1,
+                    write_timeout=1
                 )
 
                 time.sleep(2)
 
                 arduino_connected = True
-
                 with lock:
                     data["arduino"] = True
 
                 print("[Arduino] Connected")
 
-            else:
-                print("[Arduino] Not Found -> Simulation Mode")
-
         except Exception as e:
-
             print("[Arduino] Connect Error:", e)
 
             arduino_connected = False
-
             with lock:
                 data["arduino"] = False
 
-        time.sleep(5)
+            time.sleep(3)
 
 # =====================================================
 # SERIAL READER
@@ -324,5 +312,6 @@ if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
         port=5000,
-        debug=True
+        debug=False,
+        use_reloader=False
     )
