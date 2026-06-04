@@ -73,7 +73,7 @@ python -m venv .venv
 #### Windows
 
 ```bash
-.venv/bin/activate
+.venv/Scripts/activate
 ```
 
 #### Linux
@@ -101,7 +101,7 @@ pip install -r requirements.txt
 ### Windows
 
 ```bash
-python main.py
+python app.py
 ```
 
 

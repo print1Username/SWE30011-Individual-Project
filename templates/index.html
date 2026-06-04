@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Home Dashboard</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background:#111;
+    color:white;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+    color:#00ffcc;
+}
+
+.connection{
+    text-align:center;
+    margin-bottom:20px;
+    font-weight:bold;
+}
+
+.online{
+    color:#00ff66;
+}
+
+.offline{
+    color:#ff5555;
+}
+
+.system-card{
+    background:#1d1d1d;
+    border:2px solid #00ffcc;
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:25px;
+}
+
+.system-card h2{
+    margin-bottom:10px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#222;
+    border-radius:15px;
+    padding:20px;
+}
+
+.card h3{
+    margin-bottom:15px;
+}
+
+.info{
+    margin:6px 0;
+}
+
+.status-on{
+    color:#00ff66;
+}
+
+.status-off{
+    color:#ff5555;
+}
+
+.mode{
+    color:#00ccff;
+}
+
+.controls{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    padding:10px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-on{
+    background:#2e7d32;
+    color:white;
+}
+
+.btn-off{
+    background:#c62828;
+    color:white;
+}
+
+.btn-auto{
+    background:#1565c0;
+    color:white;
+}
+
+.btn-enable{
+    background:#2e7d32;
+    color:white;
+}
+
+.btn-disable{
+    background:#c62828;
+    color:white;
+}
+
+.sensor-card{
+    margin-top:20px;
+    background:#222;
+    border-radius:15px;
+    padding:20px;
+}
+
+.sensor-grid{
+    display:flex;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+.sensor-item{
+    font-size:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Smart Home Dashboard</h1>
+
+<div class="connection">
+    Arduino:
+    <span id="arduinoStatus" class="offline">
+        OFFLINE (Simulation Mode)
+    </span>
+</div>
+
+<!-- SYSTEM -->
+
+<div class="system-card">
+
+    <h2>System Control</h2>
+
+    <div class="info">
+        Status:
+        <span id="systemStatus">OFF</span>
+    </div>
+
+    <div class="controls">
+        <button class="btn-on"
+                onclick="sendCommand('SYSTEM_ON')">
+            ON
+        </button>
+
+        <button class="btn-off"
+                onclick="sendCommand('SYSTEM_OFF')">
+            OFF
+        </button>
+    </div>
+
+</div>
+
+<div class="grid">
+
+    <!-- FAN -->
+
+    <div class="card">
+
+        <h3>Fan</h3>
+
+        <div class="info">
+            Status:
+            <span id="fanStatus">OFF</span>
+        </div>
+
+        <div class="info">
+            Mode:
+            <span id="fanMode" class="mode">AUTO</span>
+        </div>
+
+        <div class="controls">
+
+            <button class="btn-on"
+                    onclick="sendCommand('FAN_ON')">
+                ON
+            </button>
+
+            <button class="btn-off"
+                    onclick="sendCommand('FAN_OFF')">
+                OFF
+            </button>
+
+            <button class="btn-auto"
+                    onclick="sendCommand('FAN_AUTO')">
+                AUTO
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- LED -->
+
+    <div class="card">
+
+        <h3>LED</h3>
+
+        <div class="info">
+            Status:
+            <span id="ledStatus">OFF</span>
+        </div>
+
+        <div class="info">
+            Mode:
+            <span id="ledMode" class="mode">AUTO</span>
+        </div>
+
+        <div class="controls">
+
+            <button class="btn-on"
+                    onclick="sendCommand('LED_ON')">
+                ON
+            </button>
+
+            <button class="btn-off"
+                    onclick="sendCommand('LED_OFF')">
+                OFF
+            </button>
+
+            <button class="btn-auto"
+                    onclick="sendCommand('LED_AUTO')">
+                AUTO
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- BUZZER -->
+
+    <div class="card">
+
+        <h3>Buzzer</h3>
+
+        <div class="info">
+            Status:
+            <span id="buzzerStatus">
+                ENABLED
+            </span>
+        </div>
+
+        <div class="controls">
+
+            <button class="btn-enable"
+                    onclick="sendCommand('BUZZER_ENABLE')">
+                ENABLE
+            </button>
+
+            <button class="btn-disable"
+                    onclick="sendCommand('BUZZER_DISABLE')">
+                DISABLE
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- SENSOR DATA -->
+
+<div class="sensor-card">
+
+    <h3>Sensor Data</h3>
+
+    <br>
+
+    <div class="sensor-grid">
+
+        <div class="sensor-item">
+            Light:
+            <span id="lightValue">0</span>
+        </div>
+
+        <div class="sensor-item">
+            Distance:
+            <span id="distanceValue">0</span> cm
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function sendCommand(command){
+
+    try{
+
+        await fetch('/command',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                command
+            })
+        });
+
+        fetchData();
+
+    }catch(err){
+        console.error(err);
+    }
+}
+
+function setStatus(element, state){
+
+    element.innerText = state;
+
+    element.className =
+        state === 'ON' ||
+        state === 'ENABLED'
+        ? 'status-on'
+        : 'status-off';
+}
+
+async function fetchData(){
+
+    try{
+
+        const res = await fetch('/data');
+        const data = await res.json();
+
+        // Arduino status
+
+        const arduino =
+            document.getElementById(
+                'arduinoStatus'
+            );
+
+        if(data.arduino){
+
+            arduino.innerText =
+                'ONLINE';
+
+            arduino.className =
+                'online';
+
+        }else{
+
+            arduino.innerText =
+                'OFFLINE (Simulation Mode)';
+
+            arduino.className =
+                'offline';
+        }
+
+        // System
+
+        setStatus(
+            document.getElementById(
+                'systemStatus'
+            ),
+            data.system ? 'ON' : 'OFF'
+        );
+
+        // Fan
+
+        setStatus(
+            document.getElementById(
+                'fanStatus'
+            ),
+            data.fan ? 'ON' : 'OFF'
+        );
+
+        document.getElementById(
+            'fanMode'
+        ).innerText = data.fan_mode;
+
+        // LED
+
+        setStatus(
+            document.getElementById(
+                'ledStatus'
+            ),
+            data.led ? 'ON' : 'OFF'
+        );
+
+        document.getElementById(
+            'ledMode'
+        ).innerText = data.led_mode;
+
+        // Buzzer
+
+        setStatus(
+            document.getElementById(
+                'buzzerStatus'
+            ),
+            data.buzzer
+                ? 'ENABLED'
+                : 'DISABLED'
+        );
+
+        // Sensors
+
+        document.getElementById(
+            'lightValue'
+        ).innerText = data.light;
+
+        document.getElementById(
+            'distanceValue'
+        ).innerText =
+            Number(data.distance)
+            .toFixed(1);
+
+    }catch(err){
+
+        console.error(err);
+    }
+}
+
+fetchData();
+
+setInterval(
+    fetchData,
+    500
+);
+
+</script>
+
+</body>
+</html>
