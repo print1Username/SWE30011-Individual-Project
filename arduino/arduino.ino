@@ -152,6 +152,7 @@ void handleCommand(String cmd) {
 // =====================================================
 
 void loop() {
+  Serial.println(digitalRead(TILT));
 
   unsigned long now = millis();
 
@@ -301,42 +302,42 @@ void loop() {
 
     digitalWrite(LED,
       ledOutput ? HIGH : LOW);
-
     // ================= BUZZER =================
 
     if (!buzzerEnabled) {
-
       noTone(BUZZER);
-
       buzzerOutput = false;
     }
     else {
-
-      static int lastTilt = HIGH;
+      static unsigned long tiltHighSince = 0;
+      static bool tiltTriggered = false;
+      static unsigned long lastBuzzerTime = 0;
 
       int tilt = digitalRead(TILT);
 
-      if (lastTilt == HIGH &&
-          tilt == LOW) {
-
-        tone(BUZZER, 500);
-
-        buzzerTimer = now;
-
-        buzzerActive = true;
-
-        buzzerOutput = true;
+      if (tilt == HIGH) {
+        if (tiltHighSince == 0) {
+          tiltHighSince = now;
+        }
+        else if (!tiltTriggered &&
+                now - tiltHighSince >= 50 &&
+                now - lastBuzzerTime >= 500) {
+          tone(BUZZER, 500);
+          buzzerTimer = now;
+          buzzerActive = true;
+          buzzerOutput = true;
+          tiltTriggered = true;
+          lastBuzzerTime = now;
+        }
+      }
+      else {
+        tiltHighSince = 1;
+        tiltTriggered = false;
       }
 
-      lastTilt = tilt;
-
-      if (buzzerActive &&
-          now - buzzerTimer > 200) {
-
+      if (buzzerActive && now - buzzerTimer > 200) {
         noTone(BUZZER);
-
         buzzerActive = false;
-
         buzzerOutput = false;
       }
     }
