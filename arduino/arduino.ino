@@ -152,8 +152,6 @@ void handleCommand(String cmd) {
 // =====================================================
 
 void loop() {
-  Serial.println(digitalRead(TILT));
-
   unsigned long now = millis();
 
   // ==========================================
